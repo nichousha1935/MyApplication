@@ -36,4 +36,5 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-18'//没有使用特殊Header，可以不加这行
     implementation "com.airbnb.android:lottie:2.5.0"
     implementation 'com.aliyun.ams:alicloud-android-hotfix:3.2.7'
+    implementation 'org.jetbrains:annotations-java5:15.0'
 }

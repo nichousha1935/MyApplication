@@ -5,12 +5,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.ind4.myapplication.R;
 
 import java.util.zip.Inflater;
+
+import views.MyLinearLayout;
 
 import static com.example.ind4.myapplication.R.layout.fragment_child_content;
 
@@ -29,6 +34,29 @@ public class NewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_child_content,null);
+        View view=inflater.inflate(R.layout.fragment_child_content,null);
+        ImageView imageView=view.findViewById(R.id.img_click);
+        final MyLinearLayout myLinearLayout=view.findViewById(R.id.mylin_click);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"事件分发",Toast.LENGTH_SHORT).show();
+            }
+        });
+        myLinearLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        Toast.makeText(getContext(),"456",Toast.LENGTH_SHORT).show();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        myLinearLayout.performClick();
+                        break;
+                }
+                return true;
+            }
+        });
+        return view;
     }
 }

@@ -23,6 +23,7 @@ public class WeiruanFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_content,null);
         TextView textView=view.findViewById(R.id.tv_content);
         textView.setText("微软");
+
         return view;
     }
 }

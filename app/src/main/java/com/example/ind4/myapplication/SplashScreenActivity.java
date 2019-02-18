@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import activity.MainActivity;
+
 /**
  * 文件描述:
  *
@@ -20,7 +22,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreenActivity.this,MainActivity.class));
+                startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
                 finish();
             }
         },2000);

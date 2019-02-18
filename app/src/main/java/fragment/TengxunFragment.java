@@ -1,5 +1,6 @@
 package fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,8 +15,11 @@ import android.widget.Toast;
 
 import com.example.ind4.myapplication.R;
 
+import activity.WeakActivity;
+
 public class TengxunFragment extends Fragment {
     private TextView textView;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,8 +28,8 @@ public class TengxunFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_content,null);
-        textView=view.findViewById(R.id.tv_content);
+        View view = inflater.inflate(R.layout.fragment_content, null);
+        textView = view.findViewById(R.id.tv_content);
         textView.setText("腾讯");
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +40,8 @@ public class TengxunFragment extends Fragment {
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getContext(),textView.getText().toString(),Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getContext(),textView.getText().toString(),Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getContext(), WeakActivity.class));
                             }
                         });
 

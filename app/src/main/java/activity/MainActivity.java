@@ -1,4 +1,4 @@
-package com.example.ind4.myapplication;
+package activity;
 
 import android.Manifest;
 import android.content.Context;
@@ -21,6 +21,10 @@ import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import com.example.ind4.myapplication.HotFixActivity;
+import com.example.ind4.myapplication.NoScrollViewPager;
+import com.example.ind4.myapplication.R;
 
 import fragment.AliFragment;
 import fragment.BaiduFragment;
