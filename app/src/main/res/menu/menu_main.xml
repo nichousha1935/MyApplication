@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.ind4.myapplication.activity.MainActivity">
+    tools:context="com.example.ind4.myapplication.activities.MainActivity">
     <item
         android:id="@+id/action_settings"
         android:icon="@mipmap/ic_launcher_round"

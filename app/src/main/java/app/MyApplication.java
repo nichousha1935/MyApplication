@@ -1,11 +1,7 @@
 package app;
 
-import android.app.Activity;
 import android.app.Application;
-import android.os.Environment;
-
-import utils.FixDexUtils;
-import utils.PermisionUtils;
+import android.content.Context;
 
 /**
  * 文件描述:
@@ -17,5 +13,10 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
     }
 }
