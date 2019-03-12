@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -22,6 +23,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.example.ind4.myapplication.utils.DeviceUtils;
+import com.example.ind4.myapplication.utils.StatusBarHelper;
 import com.example.ind4.myapplication.views.NoScrollViewPager;
 import com.example.ind4.myapplication.R;
 
@@ -33,7 +36,7 @@ import com.example.ind4.myapplication.fragment.WeiruanFragment;
 import com.example.ind4.myapplication.utils.FixDexUtils;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private TabLayout tab_net;
     private NoScrollViewPager viewpage_net;
     private String[] title=new String[]{"腾讯","微软","网易","百度","阿里"};
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar =  findViewById(R.id.toolbar);
+        toolbar.setTitleMarginTop( DeviceUtils.getStatusBarHeight(this));
         setSupportActionBar(toolbar);
         tab_net =  findViewById(R.id.tab_order);
         viewpage_net =  findViewById(R.id.viewpage_order);
@@ -52,6 +56,16 @@ public class MainActivity extends AppCompatActivity {
             tab_net.getTabAt(i).setCustomView(new PagerAdapter(getSupportFragmentManager()).getTabView(i));
         }
        // init();
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
+
     }
 
     private class PagerAdapter extends FragmentStatePagerAdapter {

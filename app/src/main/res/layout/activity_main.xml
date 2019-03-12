@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#e65"
-        app:subtitle="汽车人"
+        app:subtitle="android"
         app:subtitleTextColor="#fff"
-        app:title="IND4"
+        app:title="ANDROID"
         app:titleTextColor="#fff">
     </android.support.v7.widget.Toolbar>
 
