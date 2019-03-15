@@ -25,6 +25,8 @@ import android.widget.TextView;
 
 import com.example.ind4.myapplication.utils.DeviceUtils;
 import com.example.ind4.myapplication.utils.StatusBarHelper;
+import com.example.ind4.myapplication.utils.ToastUtil;
+import com.example.ind4.myapplication.views.MyToolBar;
 import com.example.ind4.myapplication.views.NoScrollViewPager;
 import com.example.ind4.myapplication.R;
 
@@ -40,13 +42,20 @@ public class MainActivity extends BaseActivity {
     private TabLayout tab_net;
     private NoScrollViewPager viewpage_net;
     private String[] title=new String[]{"腾讯","微软","网易","百度","阿里"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setSteepStatusBar(true);
+        setScreenRoate(false);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar =  findViewById(R.id.toolbar);
-        toolbar.setTitleMarginTop( DeviceUtils.getStatusBarHeight(this));
-        setSupportActionBar(toolbar);
+        setActivityContentView(R.layout.activity_main);
+        getToolBar().setTitle("鼎集智能");
+        getToolBar().setImgBackOnclick(new MyToolBar.ImgBackOnclickListener() {
+            @Override
+            public void setImgBackOnclick() {
+                toast(MainActivity.this,"123");
+            }
+        });
         tab_net =  findViewById(R.id.tab_order);
         viewpage_net =  findViewById(R.id.viewpage_order);
         viewpage_net.setAdapter(new PagerAdapter(getSupportFragmentManager()));
@@ -65,6 +74,16 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initData() {
+
+    }
+
+    @Override
+    public void initBind() {
+
+    }
+
+    @Override
+    public void widgetClick(View v) {
 
     }
 
@@ -133,11 +152,11 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
 
     public void init(){
         WindowManager windowManager= (WindowManager)getSystemService(Context.WINDOW_SERVICE);

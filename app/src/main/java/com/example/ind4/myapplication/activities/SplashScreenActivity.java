@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -29,14 +30,14 @@ import okhttp3.Call;
  * @author Administrator
  * @date 2019/1/18
  */
-public class SplashScreenActivity extends AppCompatActivity implements ISplashView {
+public class SplashScreenActivity extends BaseActivity implements ISplashView {
     private IPresenterSplash iPresenterSplash;
     private Animation animationMain=null;
     private ImageView imageViewOne,imageViewTwo,imageViewThree;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        setActivityContentView(R.layout.activity_splash);
         imageViewOne=findViewById(R.id.img_splashone);
         imageViewTwo=findViewById(R.id.img_splashtwo);
         imageViewThree=findViewById(R.id.img_splashthree);
@@ -154,6 +155,27 @@ public class SplashScreenActivity extends AppCompatActivity implements ISplashVi
 //
 //            }
 //        });
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initBind() {
+
+    }
+
+    @Override
+    public void widgetClick(View v) {
+
     }
 
     @Override

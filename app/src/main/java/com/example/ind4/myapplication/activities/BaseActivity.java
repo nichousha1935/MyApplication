@@ -8,13 +8,18 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
 
+import com.example.ind4.myapplication.R;
+import com.example.ind4.myapplication.utils.DeviceUtils;
 import com.example.ind4.myapplication.utils.StatusBarHelper;
 import com.example.ind4.myapplication.utils.ToastUtil;
+import com.example.ind4.myapplication.views.MyToolBar;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
     /**
      * 是否沉浸状态栏
      **/
@@ -22,7 +27,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 是否允许旋转屏幕
      **/
-    private boolean isAllowScreenRoate = false;
+    private boolean isAllowScreenRotate = false;
+    private LinearLayout linearLayout;
+    private MyToolBar myToolBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,31 +37,40 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (isSetStatusBar) {
             steepStatusBar();
         }
-        if (isAllowScreenRoate) {
+        if (isAllowScreenRotate) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+        setContentView(R.layout.activity_base);
+        myToolBar=findViewById(R.id.toolbar_base);
+        linearLayout=findViewById(R.id.lin_content);
     }
 
 
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
-        super.setContentView(layoutResID);
+    public void setActivityContentView(@LayoutRes int layoutResID) {
+        linearLayout.addView(LayoutInflater.from(this).inflate(layoutResID,null));
         initView();
+        initBind();
         initData();
     }
 
-    @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
+    public void setActivityContentView(View view) {
+        linearLayout.addView(view);
         initView();
+        initBind();
         initData();
     }
 
     public abstract void initView();
 
     public abstract void initData();
+
+    public abstract void initBind();
+
+    public MyToolBar getToolBar(){
+        return myToolBar;
+    }
 
     public void toast(Context context, String text) {
         ToastUtil.showToast(context, text);
@@ -104,7 +120,27 @@ public abstract class BaseActivity extends AppCompatActivity {
         this.isSetStatusBar = isSetStatusBar;
     }
 
-    public void setScreenRoate(boolean isAllowScreenRoate) {
-        this.isAllowScreenRoate = isAllowScreenRoate;
+    public void setScreenRoate(boolean isAllowScreenRotate) {
+        this.isAllowScreenRotate = isAllowScreenRotate;
+    }
+
+    private boolean fastClick() {
+        long lastClick = 0;
+        if (System.currentTimeMillis() - lastClick <= 1000) {
+            return false;
+        }
+        lastClick = System.currentTimeMillis();
+        return true;
+    }
+
+    /**
+     * View点击
+     **/
+    public abstract void widgetClick(View v);
+
+    @Override
+    public void onClick(View v) {
+        if (fastClick())
+            widgetClick(v);
     }
 }
