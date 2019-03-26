@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.ind4.myapplication">
+    package="com.example.wangke.myapplication">
     <!--<meta-data-->
     <!--android:name="com.taobao.android.hotfix.IDSECRET"-->
     <!--android:value="App ID" />-->
@@ -20,8 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.example.ind4.myapplication.activities.MainActivity" />
-        <activity android:name="com.example.ind4.myapplication.activities.SplashScreenActivity">
+        <activity android:name="com.example.wangke.myapplication.activities.MainActivity" />
+        <activity android:name="com.example.wangke.myapplication.activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,10 +29,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.ind4.myapplication.activities.HotFixActivity"
+            android:name="com.example.wangke.myapplication.activities.HotFixActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.example.ind4.myapplication.activities.WeakActivity"
+            android:name="com.example.wangke.myapplication.activities.WeakActivity"
             android:screenOrientation="portrait" />
 
         <service android:name=".service.PlayService"/>

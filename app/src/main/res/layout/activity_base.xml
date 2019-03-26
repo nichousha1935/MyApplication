@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.ind4.myapplication.views.MyToolBar
+    <com.example.wangke.myapplication.views.MyToolBar
         android:id="@+id/toolbar_base"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:background="#e65"
         android:fitsSystemWindows="true">
 
-    </com.example.ind4.myapplication.views.MyToolBar>
+    </com.example.wangke.myapplication.views.MyToolBar>
 
 
 </LinearLayout>
