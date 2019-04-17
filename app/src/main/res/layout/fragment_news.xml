@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:ignore="RtlHardcoded,HardcodedText,RtlSymmetry,SmallSp">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_tool"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:id="@+id/tv_month_day"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:textColor="#000000"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            tools:ignore="RtlSymmetry" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/tv_month_day"
+            android:orientation="vertical"
+            android:paddingLeft="6dp"
+            android:paddingTop="12dp"
+            android:paddingRight="6dp"
+            android:paddingBottom="12dp"
+            tools:ignore="RelativeOverlap">
+
+            <TextView
+                android:id="@+id/tv_year"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/tv_lunar"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_current"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/bg_ripple">
+
+            <ImageView
+                android:id="@+id/ib_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_calendar" />
+
+            <TextView
+                android:id="@+id/tv_current_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+        </FrameLayout>
+    </RelativeLayout>
+
+    <com.haibin.calendarview.CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        app:calendar_padding="10dp"
+        app:current_month_lunar_text_color="#CFCFCF"
+        app:current_month_text_color="#333333"
+        app:max_year="2030"
+        app:min_year="2018"
+        app:month_view="@string/monthUrl"
+        app:month_view_show_mode="mode_only_current"
+        app:other_month_lunar_text_color="#e1e1e1"
+        app:other_month_text_color="#e1e1e1"
+        app:scheme_text_color="#333"
+        app:scheme_theme_color="#128c4b"
+        app:select_mode="single_mode"
+        app:selected_lunar_text_color="#CFCFCF"
+        app:selected_text_color="#333"
+        app:selected_theme_color="#80cfcfcf"
+        app:week_background="#fff"
+        app:week_start_with="sun"
+        app:week_text_color="#111111"
+        app:week_view="@string/weekUrl"
+        app:week_view_scrollable="true"
+        app:year_view_day_text_color="#333333"
+        app:year_view_day_text_size="9sp"
+        app:year_view_month_text_color="#ff0000"
+        app:year_view_month_text_size="20sp"
+        app:year_view_scheme_color="#f17706" />
+</LinearLayout><!--<declare-styleable name="CalendarView">-->
+
+    <!--<attr name="calendar_padding" format="dimension" />&lt;!&ndash;日历内部左右padding&ndash;&gt;-->
+
+    <!--<attr name="month_view" format="color" /> &lt;!&ndash;自定义类日历月视图路径&ndash;&gt;--><!--<attr name="week_view" format="string" /> &lt;!&ndash;自定义类周视图路径&ndash;&gt;--><!--<attr name="week_bar_height" format="dimension" /> &lt;!&ndash;星期栏的高度&ndash;&gt;--><!--<attr name="week_bar_view" format="color" /> &lt;!&ndash;自定义类周栏路径，通过自定义则 week_text_color week_background xml设置无效，当仍可java api设置&ndash;&gt;--><!--<attr name="week_line_margin" format="dimension" />&lt;!&ndash;线条margin&ndash;&gt;-->
+
+    <!--<attr name="week_line_background" format="color" />&lt;!&ndash;线条颜色&ndash;&gt;--><!--<attr name="week_background" format="color" /> &lt;!&ndash;星期栏的背景&ndash;&gt;--><!--<attr name="week_text_color" format="color" /> &lt;!&ndash;星期栏文本颜色&ndash;&gt;--><!--<attr name="week_text_size" format="dimension" />&lt;!&ndash;星期栏文本大小&ndash;&gt;-->
+
+    <!--<attr name="current_day_text_color" format="color" /> &lt;!&ndash;今天的文本颜色&ndash;&gt;--><!--<attr name="current_day_lunar_text_color" format="color" />&lt;!&ndash;今天的农历文本颜色&ndash;&gt;-->
+
+    <!--<attr name="calendar_height" format="string" /> &lt;!&ndash;日历每项的高度，56dp&ndash;&gt;--><!--<attr name="day_text_size" format="string" /> &lt;!&ndash;天数文本大小&ndash;&gt;--><!--<attr name="lunar_text_size" format="string" /> &lt;!&ndash;农历文本大小&ndash;&gt;-->
+
+    <!--<attr name="scheme_text" format="string" /> &lt;!&ndash;标记文本&ndash;&gt;--><!--<attr name="scheme_text_color" format="color" /> &lt;!&ndash;标记文本颜色&ndash;&gt;--><!--<attr name="scheme_month_text_color" format="color" /> &lt;!&ndash;标记天数文本颜色&ndash;&gt;--><!--<attr name="scheme_lunar_text_color" format="color" /> &lt;!&ndash;标记农历文本颜色&ndash;&gt;-->
+
+    <!--<attr name="scheme_theme_color" format="color" /> &lt;!&ndash;标记的颜色&ndash;&gt;-->
+
+    <!--<attr name="selected_theme_color" format="color" /> &lt;!&ndash;选中颜色&ndash;&gt;--><!--<attr name="selected_text_color" format="color" /> &lt;!&ndash;选中文本颜色&ndash;&gt;--><!--<attr name="selected_lunar_text_color" format="color" /> &lt;!&ndash;选中农历文本颜色&ndash;&gt;-->
+
+    <!--<attr name="current_month_text_color" format="color" /> &lt;!&ndash;当前月份的字体颜色&ndash;&gt;--><!--<attr name="other_month_text_color" format="color" /> &lt;!&ndash;其它月份的字体颜色&ndash;&gt;-->
+
+    <!--<attr name="current_month_lunar_text_color" format="color" /> &lt;!&ndash;当前月份农历节假日颜色&ndash;&gt;--><!--<attr name="other_month_lunar_text_color" format="color" /> &lt;!&ndash;其它月份农历节假日颜色&ndash;&gt;-->
+
+    <!--&lt;!&ndash; 年视图相关 &ndash;&gt;--><!--<attr name="year_view_month_text_size" format="dimension" /> &lt;!&ndash; 年视图月份字体大小 &ndash;&gt;--><!--<attr name="year_view_day_text_size" format="dimension" /> &lt;!&ndash; 年视图月份日期字体大小 &ndash;&gt;--><!--<attr name="year_view_month_text_color" format="color" /> &lt;!&ndash; 年视图月份字体颜色 &ndash;&gt;--><!--<attr name="year_view_day_text_color" format="color" /> &lt;!&ndash; 年视图日期字体颜色 &ndash;&gt;--><!--<attr name="year_view_scheme_color" format="color" /> &lt;!&ndash; 年视图标记颜色 &ndash;&gt;-->
+
+    <!--<attr name="min_year" format="integer" />  &lt;!&ndash;最小年份1900&ndash;&gt;--><!--<attr name="max_year" format="integer" />  &lt;!&ndash;最大年份2099&ndash;&gt;--><!--<attr name="min_year_month" format="integer" /> &lt;!&ndash;最小年份对应月份&ndash;&gt;--><!--<attr name="max_year_month" format="integer" /> &lt;!&ndash;最大年份对应月份&ndash;&gt;-->
+
+    <!--&lt;!&ndash;月视图是否可滚动&ndash;&gt;--><!--<attr name="month_view_scrollable" format="boolean" />--><!--&lt;!&ndash;周视图是否可滚动&ndash;&gt;--><!--<attr name="week_view_scrollable" format="boolean" />--><!--&lt;!&ndash;年视图是否可滚动&ndash;&gt;--><!--<attr name="year_view_scrollable" format="boolean" />-->
+
+    <!--&lt;!&ndash;配置你喜欢的月视图显示模式模式&ndash;&gt;--><!--<attr name="month_view_show_mode">--><!--<enum name="mode_all" value="0" /> &lt;!&ndash;全部显示&ndash;&gt;--><!--<enum name="mode_only_current" value="1" /> &lt;!&ndash;仅显示当前月份&ndash;&gt;--><!--<enum name="mode_fix" value="2" /> &lt;!&ndash;自适应显示，不会多出一行，但是会自动填充&ndash;&gt;--><!--</attr>-->
+
+    <!--&lt;!&ndash; 自定义周起始 &ndash;&gt;--><!--<attr name="week_start_with">--><!--<enum name="sun" value="1" />--><!--<enum name="mon" value="2" />--><!--<enum name="sat" value="7" />--><!--</attr>-->
+
+    <!--&lt;!&ndash; 自定义选择模式 &ndash;&gt;--><!--<attr name="select_mode">--><!--<enum name="default_mode" value="0" />--><!--<enum name="single_mode" value="1" />--><!--<enum name="range_mode" value="2" />--><!--</attr>-->
+
+    <!--&lt;!&ndash; 当 select_mode=range_mode &ndash;&gt;--><!--<attr name="min_select_range" format="integer" />--><!--<attr name="max_select_range" format="integer" />--><!--</declare-styleable>-->

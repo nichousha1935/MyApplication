@@ -35,6 +35,7 @@ public class WeakActivity extends AppCompatActivity {
         for (String string : strings) {
             u=u+500;
             Message message=Message.obtain();
+
             message.what=1;
             message.obj=string;
             myHandle.sendMessageDelayed(message,u);

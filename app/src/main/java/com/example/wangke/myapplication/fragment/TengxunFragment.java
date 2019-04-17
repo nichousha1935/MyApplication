@@ -16,9 +16,8 @@ import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.airbnb.lottie.utils.Utils;
 import com.example.wangke.myapplication.R;
-
+import com.example.wangke.myapplication.activities.GSYVideoActivity;
 import com.example.wangke.myapplication.activities.WeakActivity;
 import com.example.wangke.myapplication.utils.DeviceUtils;
 
@@ -41,7 +40,7 @@ public class TengxunFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_content, null);
+        View view = inflater.inflate(R.layout.fragment_tecent, null);
         for (int i = 0; i < res.length; i++) {
             ImageView imageView = (ImageView) view.findViewById(res[i]);
             imageView.setOnClickListener(this);
@@ -58,8 +57,8 @@ public class TengxunFragment extends Fragment implements View.OnClickListener {
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
-//                                Toast.makeText(getContext(),textView.getText().toString(),Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getContext(), WeakActivity.class));
+                                //startActivity(new Intent(getContext(), WeakActivity.class));
+                                startActivity(new Intent(getContext(), GSYVideoActivity.class));
                             }
                         });
 
@@ -99,7 +98,7 @@ public class TengxunFragment extends Fragment implements View.OnClickListener {
             set.setDuration(500).setStartDelay(100 * i);
             set.start();
         }
-         //转动加号大图标本身45°
+        //转动加号大图标本身45°
         ObjectAnimator rotate = ObjectAnimator.ofFloat(imageViews.get(0), "rotation", 0, 45).setDuration(300);
         rotate.setInterpolator(new BounceInterpolator());
         rotate.start();
@@ -113,19 +112,17 @@ public class TengxunFragment extends Fragment implements View.OnClickListener {
         //for循环来开始小图标的出现动画
         for (int i = 1; i < res.length; i++) {
             AnimatorSet set = new AnimatorSet();
-            double x = Math.cos(0.5 / (res.length - 2) * (i - 1) * Math.PI) * DeviceUtils.dip2px(getContext(), dp);
-            double y = Math.sin(0.5 / (res.length - 2) * (i - 1) * Math.PI) * DeviceUtils.dip2px(getContext(), dp);
             set.playTogether(
-                    ObjectAnimator.ofFloat(imageViews.get(i),"translationX",(float)(x*0.25),(float)x),
-                    ObjectAnimator.ofFloat(imageViews.get(i),"translationY",(float)(y*0.25),(float)y)
-                    ,ObjectAnimator.ofFloat(imageViews.get(i),"alpha",1,0).setDuration(2000)
+                    ObjectAnimator.ofFloat(imageViews.get(i), "translationX", 0, 0),
+                    ObjectAnimator.ofFloat(imageViews.get(i), "translationY", 0, 0)
+                    , ObjectAnimator.ofFloat(imageViews.get(i), "alpha", 1, 0).setDuration(2000)
             );
             set.setInterpolator(new BounceInterpolator());
-            set.setDuration(500).setStartDelay(100*i);
+            set.setDuration(500).setStartDelay(100 * i);
             set.start();
         }
         //转动加号大图标本身45°
-        ObjectAnimator rotate = ObjectAnimator.ofFloat(imageViews.get(0),"rotation",45,0).setDuration(300);
+        ObjectAnimator rotate = ObjectAnimator.ofFloat(imageViews.get(0), "rotation", 45, 0).setDuration(300);
         rotate.setInterpolator(new BounceInterpolator());
         rotate.start();
 

@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * 文件描述:
  *
- * @author Administrator
+ * @author wangke
  * @date 2019/2/19
  */
 public class OkhttpUtil {
@@ -83,7 +83,7 @@ public class OkhttpUtil {
         new RequestUtil(METHOD_POST, url, paramsMap, headerMap, callBack).execute();
     }
     /**
-     * post请求
+     * put请求
      * @param url：url
      * @param callBack：回调接口，onFailure方法在请求失败时调用，onResponse方法在请求成功后调用，这两个方法都执行在UI线程。
      */
@@ -92,7 +92,7 @@ public class OkhttpUtil {
     }
 
     /**
-     * post请求，可以传递参数
+     * put请求，可以传递参数
      * @param url：url
      * @param paramsMap：map集合，封装键值对参数
      * @param callBack：回调接口，onFailure方法在请求失败时调用，onResponse方法在请求成功后调用，这两个方法都执行在UI线程。
@@ -102,7 +102,7 @@ public class OkhttpUtil {
     }
 
     /**
-     * post请求，可以传递参数
+     * put请求，可以传递参数
      * @param url：url
      * @param paramsMap：map集合，封装键值对参数
      * @param headerMap：map集合，封装请求头键值对
@@ -112,7 +112,7 @@ public class OkhttpUtil {
         new RequestUtil(METHOD_PUT, url, paramsMap, headerMap, callBack).execute();
     }
     /**
-     * post请求
+     * delete请求
      * @param url：url
      * @param callBack：回调接口，onFailure方法在请求失败时调用，onResponse方法在请求成功后调用，这两个方法都执行在UI线程。
      */
@@ -121,7 +121,7 @@ public class OkhttpUtil {
     }
 
     /**
-     * post请求，可以传递参数
+     * delete请求，可以传递参数
      * @param url：url
      * @param paramsMap：map集合，封装键值对参数
      * @param callBack：回调接口，onFailure方法在请求失败时调用，onResponse方法在请求成功后调用，这两个方法都执行在UI线程。
@@ -131,7 +131,7 @@ public class OkhttpUtil {
     }
 
     /**
-     * post请求，可以传递参数
+     * delete请求，可以传递参数
      * @param url：url
      * @param paramsMap：map集合，封装键值对参数
      * @param headerMap：map集合，封装请求头键值对
@@ -142,7 +142,7 @@ public class OkhttpUtil {
     }
 
     /**
-     * post请求，可以传递参数
+     * delete请求，可以传递参数
      * @param url：url
      * @param jsonStr：json格式的键值对参数
      * @param callBack：回调接口，onFailure方法在请求失败时调用，onResponse方法在请求成功后调用，这两个方法都执行在UI线程。

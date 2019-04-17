@@ -7,7 +7,7 @@ import bean.UserInfo;
 
 public class UserManager {
     private UserInfo userInfo=new UserInfo();
-    private SharedPreferences userSharedPreferenced;
+    private SharedPreferences userSharedPreferences;
     private static final String USER_SETTING = "user_setting";
 
     private UserManager() {
@@ -24,8 +24,8 @@ public class UserManager {
 
 
     public void saveUserInfo(Context context, UserInfo userInfo) {
-        userSharedPreferenced = context.getSharedPreferences(USER_SETTING, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = userSharedPreferenced.edit();
+        userSharedPreferences = context.getSharedPreferences(USER_SETTING, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = userSharedPreferences.edit();
         editor.putString("userName", userInfo.getUserName());
         editor.putString("phoneNumber", userInfo.getPhoneNumber());
         editor.putString("phoneModel", userInfo.getPhoneModel());
@@ -35,18 +35,18 @@ public class UserManager {
     }
 
     public UserInfo getUserInfo(Context context) {
-        userSharedPreferenced = context.getSharedPreferences(USER_SETTING, Context.MODE_PRIVATE);
-        userInfo.setUserName(userSharedPreferenced.getString("userName",""));
-        userInfo.setPhoneNumber(userSharedPreferenced.getString("phoneNumber",""));
-        userInfo.setPhoneModel(userSharedPreferenced.getString("phoneModel",""));
-        userInfo.setLoginId(userSharedPreferenced.getInt("loginId",0));
-        userInfo.setHeadImgUrl(userSharedPreferenced.getString("headImgUrl",""));
+        userSharedPreferences = context.getSharedPreferences(USER_SETTING, Context.MODE_PRIVATE);
+        userInfo.setUserName(userSharedPreferences.getString("userName",""));
+        userInfo.setPhoneNumber(userSharedPreferences.getString("phoneNumber",""));
+        userInfo.setPhoneModel(userSharedPreferences.getString("phoneModel",""));
+        userInfo.setLoginId(userSharedPreferences.getInt("loginId",0));
+        userInfo.setHeadImgUrl(userSharedPreferences.getString("headImgUrl",""));
         return userInfo;
     }
 
     public void loginOut(Context context){
-        userSharedPreferenced = context.getSharedPreferences(USER_SETTING, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = userSharedPreferenced.edit();
+        userSharedPreferences = context.getSharedPreferences(USER_SETTING, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = userSharedPreferences.edit();
         editor.clear();
         editor.commit();
 

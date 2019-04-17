@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -28,13 +29,12 @@ import com.example.wangke.myapplication.fragment.WeiruanFragment;
 import com.example.wangke.myapplication.utils.FixDexUtils;
 import com.example.wangke.myapplication.views.NoScrollViewPager;
 
-import app.UserManager;
-
 
 public class MainActivity extends BaseActivity {
     private TabLayout tab_net;
     private NoScrollViewPager viewpage_net;
     private String[] title = new String[]{"腾讯", "微软", "网易", "百度", "阿里"};
+    private long time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +53,16 @@ public class MainActivity extends BaseActivity {
     public void initView() {
         tab_net = findViewById(R.id.tab_order);
         viewpage_net = findViewById(R.id.viewpage_order);
+    }
+
+    @Override
+    public void initData() {
         viewpage_net.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         viewpage_net.setCurrentItem(0);
         tab_net.setupWithViewPager(viewpage_net);
         for (int i = 0; i < tab_net.getTabCount(); i++) {
             tab_net.getTabAt(i).setCustomView(new PagerAdapter(getSupportFragmentManager()).getTabView(i));
         }
-    }
-
-    @Override
-    public void initData() {
-
     }
 
     @Override
@@ -174,5 +173,18 @@ public class MainActivity extends BaseActivity {
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (System.currentTimeMillis() - time > 2000) {
+                toast(this, "再按一次退出程序");
+                time = System.currentTimeMillis();
+            } else {
+                finish();
+            }
+        }
+        return false;
     }
 }

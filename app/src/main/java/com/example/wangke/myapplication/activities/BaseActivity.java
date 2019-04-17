@@ -14,7 +14,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
 import com.example.wangke.myapplication.R;
-import com.example.wangke.myapplication.utils.DeviceUtils;
 import com.example.wangke.myapplication.utils.StatusBarHelper;
 import com.example.wangke.myapplication.utils.ToastUtil;
 import com.example.wangke.myapplication.views.MyToolBar;

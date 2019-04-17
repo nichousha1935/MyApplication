@@ -148,7 +148,7 @@ public class RequestUtil {
                 mUrl = mUrl + key+"="+mParamsMap.get(key)+"&";
             }
             mUrl = mUrl.substring(0,mUrl.length()-1);
-        }
+    }
     }
 
 

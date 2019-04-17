@@ -57,7 +57,8 @@ public class SportFragment extends Fragment {
                 case 2:
                     return new CBAFragment();
             }
-            return new NewFragment();
+            //return new NewFragment();
+            return new Fragment();
         }
 
         @Override
