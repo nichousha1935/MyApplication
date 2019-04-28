@@ -47,9 +47,9 @@ public class SimpleMonthView extends MonthView {
 
     @Override
     protected void onDrawScheme(Canvas canvas, Calendar calendar, int x, int y) {
-        int cx = x + mItemWidth / 2;
-        int cy = y + mItemHeight / 2;
-        canvas.drawCircle(cx, cy, mRadius, mSchemePaint);
+//        int cx = x + mItemWidth / 2;
+//        int cy = y + mItemHeight / 2;
+//        canvas.drawCircle(cx, cy, mRadius, mSchemePaint);
     }
 
     @Override

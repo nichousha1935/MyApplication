@@ -63,9 +63,10 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     public abstract void initView();
 
+    public abstract void initBind();
+
     public abstract void initData();
 
-    public abstract void initBind();
 
     public MyToolBar getToolBar(){
         return myToolBar;

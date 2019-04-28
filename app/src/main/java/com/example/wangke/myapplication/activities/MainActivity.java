@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -29,6 +30,8 @@ import com.example.wangke.myapplication.fragment.WeiruanFragment;
 import com.example.wangke.myapplication.utils.FixDexUtils;
 import com.example.wangke.myapplication.views.NoScrollViewPager;
 
+import java.io.File;
+
 
 public class MainActivity extends BaseActivity {
     private TabLayout tab_net;
@@ -44,7 +47,9 @@ public class MainActivity extends BaseActivity {
         setActivityContentView(R.layout.activity_main);
         getToolBar().setTitle("鼎集智能");
         //getToolBar().setRightImg(R.mipmap.ic_launcher);
-        getToolBar().setToolBarLeftOnClickListener(() -> toast(MainActivity.this, "怎么可能让你离开呢"));
+        getToolBar().setToolBarLeftOnClickListener(() -> {
+            toast(MainActivity.this, "怎么可能让你离开呢");
+        });
         getToolBar().setToolBarRightOnClickListener(() -> toast(MainActivity.this, "我是右边的按钮"));
         // init();
     }
@@ -164,13 +169,25 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 1) {
-            if (permissions[0].equals(Manifest.permission.READ_CALENDAR)) {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    FixDexUtils.loadFixedDex(this, Environment.getExternalStorageDirectory());
-                    startActivity(new Intent(this, HotFixActivity.class));
+        switch (requestCode) {
+            case 1:
+                if (permissions[0].equals(Manifest.permission.READ_CALENDAR)) {
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                        FixDexUtils.loadFixedDex(this, Environment.getExternalStorageDirectory());
+                        startActivity(new Intent(this, HotFixActivity.class));
+                    }
                 }
-            }
+                break;
+            case 2:
+                Intent intentToPickPic = new Intent(Intent.ACTION_PICK, null);
+                intentToPickPic.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intentToPickPic, 2);
+                break;
+            case 3:
+
+                break;
+            default:
+                break;
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }

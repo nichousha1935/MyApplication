@@ -7,21 +7,25 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.contrarywind.listener.OnItemSelectedListener;
+import com.contrarywind.view.WheelView;
 import com.example.wangke.myapplication.R;
 import com.example.wangke.myapplication.utils.ToastUtil;
 import com.example.wangke.myapplication.utils.Tool;
-import com.example.wangke.myapplication.views.MeiZuMonthView;
-import com.example.wangke.myapplication.views.MeizuWeekView;
 import com.example.wangke.myapplication.views.SimpleMonthView;
 import com.example.wangke.myapplication.views.SimpleWeekView;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,10 +36,8 @@ import java.util.Map;
  */
 public class NewFragment extends Fragment implements CalendarView.OnCalendarSelectListener, CalendarView.OnYearChangeListener, View.OnClickListener {
     private CalendarView mCalendarView;
-    private TextView mTextMonthDay, mTextYear, mTextLunar, mTextCurrentDay;
-    private RelativeLayout mRelativeTool;
-    private FrameLayout mFrameLayout;
-    private int mYear;
+    private TextView mTextYear, mTextMonth;
+    private int mYear, mMonth;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,13 +48,10 @@ public class NewFragment extends Fragment implements CalendarView.OnCalendarSele
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news, null);
-        mFrameLayout=view.findViewById(R.id.fl_current);
-        mTextMonthDay = view.findViewById(R.id.tv_month_day);
-        mTextYear = view.findViewById(R.id.tv_year);
-        mTextLunar = view.findViewById(R.id.tv_lunar);
-        mRelativeTool = view.findViewById(R.id.rl_tool);
+        mTextYear = view.findViewById(R.id.calendar_year);
+        mTextMonth = view.findViewById(R.id.calendar_month);
         mCalendarView = view.findViewById(R.id.calendarView);
-        mTextCurrentDay = view.findViewById(R.id.tv_current_day);
+        mCalendarView.setMonthViewScrollable(false);
         mCalendarView.setMonthView(SimpleMonthView.class);
         mCalendarView.setWeekView(SimpleWeekView.class);
         return view;
@@ -64,50 +63,67 @@ public class NewFragment extends Fragment implements CalendarView.OnCalendarSele
         init();
     }
 
-    public void init(){
-        mTextMonthDay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //打开日历年月份快速选择
-                mCalendarView.showYearSelectLayout(mYear);
-                mTextLunar.setVisibility(View.GONE);
-                mTextYear.setVisibility(View.GONE);
-                mTextMonthDay.setText(String.valueOf(mYear));
-            }
-        });
-        mFrameLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCalendarView.scrollToCurrent();
-            }
-        });
+    public void init() {
         mCalendarView.setOnCalendarSelectListener(this);
         mCalendarView.setOnYearChangeListener(this);
+        mTextYear.setOnClickListener(this);
+        mTextMonth.setOnClickListener(this);
         mTextYear.setText(String.valueOf(mCalendarView.getCurYear()));
+        mTextMonth.setText(String.valueOf(mCalendarView.getCurMonth()));
         mYear = mCalendarView.getCurYear();
-        mTextMonthDay.setText(mCalendarView.getCurMonth() + "月" + mCalendarView.getCurDay() + "日");
-        mTextLunar.setText("今日");
-       // mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay()));
-
-        int year = mCalendarView.getCurYear();
-        int month = mCalendarView.getCurMonth();
+        mMonth = mCalendarView.getCurMonth();
 
         Map<String, Calendar> map = new HashMap<>();
-        map.put(getSchemeCalendar(year, month, 3, 0xFF40db25, "迟到").toString(),
-                getSchemeCalendar(year, month, 3, 0xFF40db25, "迟到"));
-        map.put(getSchemeCalendar(year, month, 6, 0xFFe69138, "早退").toString(),
-                getSchemeCalendar(year, month, 6, 0xFFe69138, "早退"));
-        map.put(getSchemeCalendar(year, month, 15, 0xFFaacc44, "迟到").toString(),
-                getSchemeCalendar(year, month, 15, 0xFFaacc44, "迟到"));
-        map.put(getSchemeCalendar(year, month, 25, 0xFF13acf0, "迟到").toString(),
-                getSchemeCalendar(year, month, 25, 0xFF13acf0, "迟到"));
+        map.put(getSchemeCalendar(mYear, mMonth, 3, 0xFF40db25, "迟到").toString(),
+                getSchemeCalendar(mYear, mMonth, 3, 0xFF40db25, "迟到"));
+        map.put(getSchemeCalendar(mYear, mMonth, 6, 0xFFe69138, "早退").toString(),
+                getSchemeCalendar(mYear, mMonth, 6, 0xFFe69138, "早退"));
+        map.put(getSchemeCalendar(mYear, mMonth, 15, 0xFFaacc44, "迟到").toString(),
+                getSchemeCalendar(mYear, mMonth, 15, 0xFFaacc44, "迟到"));
+        map.put(getSchemeCalendar(mYear, mMonth, 25, 0xFF13acf0, "迟到").toString(),
+                getSchemeCalendar(mYear, mMonth, 25, 0xFF13acf0, "迟到"));
         //此方法在巨大的数据量上不影响遍历性能，推荐使用
         //标记哪些日期有早退件
         mCalendarView.setSchemeDate(map);
 
-}
+    }
+
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.calendar_year:
+                List<String> optionsYearItems=new ArrayList<>();
+                for (int i=2000;i<2100;i++){
+                    optionsYearItems.add(String.valueOf(i));
+                }
+                OptionsPickerView pvOptions = new OptionsPickerBuilder(getActivity(), new OnOptionsSelectListener() {
+                    @Override
+                    public void onOptionsSelect(int options1, int option2, int options3 ,View v) {
+                        mTextYear.setText(optionsYearItems.get(options1));
+                        mCalendarView.scrollToCalendar(Integer.parseInt(String.valueOf(mTextYear.getText())),Integer.parseInt(String.valueOf(mTextMonth.getText())),1);
+                    }
+                }).setTitleText("时间").build();
+                pvOptions.setPicker(optionsYearItems);
+                pvOptions.show();
+                break;
+            case R.id.calendar_month:
+                List<String> optionsMonthItems=new ArrayList<>();
+                for (int i=1;i<13;i++){
+                    optionsMonthItems.add(String.valueOf(i));
+                }
+                OptionsPickerView pvOptions1 = new OptionsPickerBuilder(getActivity(), new OnOptionsSelectListener() {
+                    @Override
+                    public void onOptionsSelect(int options1, int option2, int options3 ,View v) {
+                        mTextMonth.setText(optionsMonthItems.get(options1));
+                        mCalendarView.scrollToCalendar(Integer.parseInt(String.valueOf(mTextYear.getText())),Integer.parseInt(String.valueOf(mTextMonth.getText())),1);
+                    }
+                }).build();
+                pvOptions1.setPicker(optionsMonthItems);
+                pvOptions1.show();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -117,24 +133,21 @@ public class NewFragment extends Fragment implements CalendarView.OnCalendarSele
 
     @Override
     public void onCalendarSelect(Calendar calendar, boolean isClick) {
-        mTextLunar.setVisibility(View.VISIBLE);
-        mTextYear.setVisibility(View.VISIBLE);
-        mTextMonthDay.setText(calendar.getMonth() + "月" + calendar.getDay() + "日");
+        if (isClick){
+            if (Tool.isEmpty(calendar.getScheme())) {
+                ToastUtil.showToast(getContext(), "考勤正常");
+            } else {
+                ToastUtil.showToast(getContext(), calendar.getScheme());
+            }
+        }
         mTextYear.setText(String.valueOf(calendar.getYear()));
-        mTextLunar.setText(calendar.getLunar());
-        mYear = calendar.getYear();
-        if (Tool.isEmpty(calendar.getScheme())){
-            ToastUtil.showToast(getContext(),"考勤正常");
-        }
-        else {
-            ToastUtil.showToast(getContext(),calendar.getScheme());
-        }
+        mTextMonth.setText(String.valueOf(calendar.getMonth()));
     }
 
     @Override
     public void onYearChange(int year) {
-        mTextMonthDay.setText(String.valueOf(year));
     }
+
     private Calendar getSchemeCalendar(int year, int month, int day, int color, String text) {
         Calendar calendar = new Calendar();
         calendar.setYear(year);

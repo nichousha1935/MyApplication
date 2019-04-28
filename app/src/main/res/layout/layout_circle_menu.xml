@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <ImageView
+        android:alpha="0"
         android:id="@+id/circle_menu_button_2"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -16,6 +17,7 @@
         android:src="@mipmap/back" />
 
     <ImageView
+        android:alpha="0"
         android:id="@+id/circle_menu_button_3"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -25,6 +27,7 @@
         android:src="@mipmap/back" />
 
     <ImageView
+        android:alpha="0"
         android:id="@+id/circle_menu_button_4"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -34,6 +37,7 @@
         android:src="@mipmap/back" />
 
     <ImageView
+        android:alpha="0"
         android:id="@+id/circle_menu_button_5"
         android:layout_width="40dp"
         android:layout_height="40dp"

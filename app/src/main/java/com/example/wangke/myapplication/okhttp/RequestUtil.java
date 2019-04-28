@@ -251,6 +251,7 @@ public class RequestUtil {
 
 
     void execute(){
+        //异步请求
         mOkHttpClient.newCall(mOkHttpRequest).enqueue(new Callback() {
             @Override
             public void onFailure(final Call call, final IOException e) {

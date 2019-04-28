@@ -37,23 +37,41 @@
             android:name="com.example.wangke.myapplication.activities.WeakActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activities.VersionUpdateActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activities.GSYVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 
         <service android:name=".service.PlayService" />
         <service android:name=".service.NewPlayService" />
+
+        <!-- 解决apk安装失败的问题 -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.wangke.myapplication.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
     <!-- 往SDCard写入数据权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--  从SDCard读取数据权限 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!--  请求网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--  相机权限权限 -->
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
 
 </manifest>

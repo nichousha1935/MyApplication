@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Prepare</string>
+    <string name="app_name">技术积累</string>
     <string name="weekUrl">com.example.wangke.myapplication.views.MeiZuWeekView</string>
     <string name="monthUrl">com.example.wangke.myapplication.views.MeiZuMonthView</string>
 </resources>

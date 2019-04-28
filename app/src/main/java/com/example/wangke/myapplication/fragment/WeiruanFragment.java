@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.example.wangke.myapplication.R;
@@ -42,18 +43,32 @@ public class WeiruanFragment extends Fragment implements View.OnClickListener {
                 TimePickerView pvTime = new TimePickerBuilder(getContext(), new OnTimeSelectListener() {
                     @Override
                     public void onTimeSelect(Date date, View v) {
-                        ToastUtil.showToast(getContext(),getTime(date));
+                        ToastUtil.showToast(getContext(), getTime(date));
                     }
                 }).setType(new boolean[]{true, true, true, true, true, false})// 默认全部显示
-                 .build();
+                        .setLayoutRes(R.layout.view_timepicker, new CustomListener() {
+                            @Override
+                            public void customLayout(View v) {
+
+                            }
+                        })
+                        .build();
                 pvTime.show();
                 break;
             default:
                 break;
         }
     }
+
     private String getTime(Date date) {//可根据需要自行截取数据显示
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return format.format(date);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-E HH:mm:ss");
+        SimpleDateFormat formatYear = new SimpleDateFormat("yyyy");
+        SimpleDateFormat formatMonth = new SimpleDateFormat("MM");
+        SimpleDateFormat formatDay = new SimpleDateFormat("dd");
+        SimpleDateFormat formatHour = new SimpleDateFormat("E");
+        SimpleDateFormat formatMin = new SimpleDateFormat("HH");
+        SimpleDateFormat formatSecond = new SimpleDateFormat("mm");
+        SimpleDateFormat formatWeek = new SimpleDateFormat("ss");
+        return formatHour.format(date);
     }
 }
