@@ -17,12 +17,17 @@ import com.example.wangke.myapplication.R;
 import com.example.wangke.myapplication.utils.ToastUtil;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class WeiruanFragment extends Fragment implements View.OnClickListener {
+    private TimePickerView pvTime;
+    private Calendar selectedDate = Calendar.getInstance();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        selectedDate.set(2019,5,12,0,0);
     }
 
     @Nullable
@@ -40,7 +45,8 @@ public class WeiruanFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.tv_content:
                 //时间选择器
-                TimePickerView pvTime = new TimePickerBuilder(getContext(), new OnTimeSelectListener() {
+                pvTime = new TimePickerBuilder(getContext(), new OnTimeSelectListener() {
+
                     @Override
                     public void onTimeSelect(Date date, View v) {
                         ToastUtil.showToast(getContext(), getTime(date));
@@ -49,9 +55,15 @@ public class WeiruanFragment extends Fragment implements View.OnClickListener {
                         .setLayoutRes(R.layout.view_timepicker, new CustomListener() {
                             @Override
                             public void customLayout(View v) {
-
+                                TextView textViewOk = v.findViewById(R.id.tv_finish);
+                                textViewOk.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        pvTime.returnData();
+                                    }
+                                });
                             }
-                        })
+                        }).setDate(selectedDate)
                         .build();
                 pvTime.show();
                 break;

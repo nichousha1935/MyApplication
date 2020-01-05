@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.wangke.myapplication.R;
 import com.example.wangke.myapplication.utils.DeviceUtils;
+import com.example.wangke.myapplication.utils.Tool;
 
 public class MyToolBar extends Toolbar {
     private TextView textTile;
@@ -69,7 +70,11 @@ public class MyToolBar extends Toolbar {
         paramsBack.gravity = Gravity.CENTER_VERTICAL;
         imgBack = new ImageView(getContext());
         imgBack.setBackgroundResource(R.mipmap.back);
-        imgBack.setOnClickListener(v -> toolBarLeftOnClickListener.setToolBarLeftOnClick());
+        imgBack.setOnClickListener(v -> {
+            if (!Tool.isEmpty(toolBarLeftOnClickListener)){
+                toolBarLeftOnClickListener.setToolBarLeftOnClick();
+            }
+        });
 
     }
 
@@ -79,7 +84,11 @@ public class MyToolBar extends Toolbar {
         paramsImgRight.setMargins(0, 0, DeviceUtils.dip2px(getContext(), 20), 0);
         imgRight = new ImageView(getContext());
         imgRight.setBackgroundResource(R.mipmap.back);
-        imgRight.setOnClickListener(v -> toolBarRightOnClickListener.setToolBarRightOnClick());
+        imgRight.setOnClickListener(v -> {
+            if (!Tool.isEmpty(toolBarLeftOnClickListener)){
+                toolBarRightOnClickListener.setToolBarRightOnClick();
+            }
+        });
     }
 
     public interface ToolBarLeftOnClickListener {

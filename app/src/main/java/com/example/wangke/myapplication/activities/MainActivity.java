@@ -7,10 +7,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -27,10 +27,8 @@ import com.example.wangke.myapplication.fragment.BaiduFragment;
 import com.example.wangke.myapplication.fragment.TengxunFragment;
 import com.example.wangke.myapplication.fragment.WangyiFragment;
 import com.example.wangke.myapplication.fragment.WeiruanFragment;
-import com.example.wangke.myapplication.utils.FixDexUtils;
+import com.example.wangke.myapplication.utils.ToastUtil;
 import com.example.wangke.myapplication.views.NoScrollViewPager;
-
-import java.io.File;
 
 
 public class MainActivity extends BaseActivity {
@@ -38,6 +36,7 @@ public class MainActivity extends BaseActivity {
     private NoScrollViewPager viewpage_net;
     private String[] title = new String[]{"腾讯", "微软", "网易", "百度", "阿里"};
     private long time;
+    private static final int requestPermission = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +71,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initBind() {
-
+        checkPermission();
     }
 
     @Override
@@ -170,21 +169,28 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case 1:
-                if (permissions[0].equals(Manifest.permission.READ_CALENDAR)) {
-                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                        FixDexUtils.loadFixedDex(this, Environment.getExternalStorageDirectory());
-                        startActivity(new Intent(this, HotFixActivity.class));
+            case requestPermission:
+                if (permissions[0].equals(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED ) {
+
                     }
                 }
                 break;
-            case 2:
+            case TengxunFragment.RC_TAKE_PHOTO:
+//                if (permissions[0].equals(Manifest.permission.READ_CALENDAR)) {
+//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+//                    FixDexUtils.loadFixedDex(this, Environment.getExternalStorageDirectory());
+//                    startActivity(new Intent(this, HotFixActivity.class));
+//                }
+//            }
+                break;
+            case TengxunFragment.RC_CHOOSE_PHOTO:
                 Intent intentToPickPic = new Intent(Intent.ACTION_PICK, null);
                 intentToPickPic.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 startActivityForResult(intentToPickPic, 2);
                 break;
-            case 3:
-
+            case TengxunFragment.RC_UPDATE_APP:
+                startActivity(new Intent(this, VersionUpdateActivity.class));
                 break;
             default:
                 break;
@@ -203,5 +209,21 @@ public class MainActivity extends BaseActivity {
             }
         }
         return false;
+    }
+
+    public void checkPermission() {
+        int permissionLocation = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+//        int permissionCalendar = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permissionLocation != PackageManager.PERMISSION_GRANTED) {
+            //如果应用之前请求过此权限但用户拒绝了请求，此方法将返回 true,它在用户选择"不再询问"的情况下返回false
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                ToastUtil.showToast(this, "请赋予App读写权限");
+            } else {
+                // We don't have permission so prompt the user
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, requestPermission);
+            }
+        } else {
+            //startActivity(new Intent(this, VersionUpdateActivity.class));
+        }
     }
 }

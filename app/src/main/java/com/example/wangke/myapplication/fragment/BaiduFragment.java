@@ -35,15 +35,14 @@ public class BaiduFragment extends Fragment {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://211.103.33.70:13382/parkingInterface/payment/getPayRecord";
+                String url = "http://192.168.2.232:8081/appLogin";
                 Map<String, String> map = new HashMap<>();
-                map.put("openid", "123");
-                map.put("carownerId", "26");
-                map.put("sysType", "1");
+                map.put("password", "12345");
+                map.put("userName", "csf1");
 
                 Map<String, String> heaherMap = new HashMap<>();
                 heaherMap.put("content-type", "application/json");
-                OkhttpUtil.okHttpGet(url, map, heaherMap, new CallBackUtil.CallBackString() {
+                OkhttpUtil.okHttpPost(url, map, heaherMap, new CallBackUtil.CallBackString() {
                     @Override
                     public void onFailure(Call call, Exception e) {
 
@@ -52,8 +51,9 @@ public class BaiduFragment extends Fragment {
 
                     @Override
                     public void onResponse(String response) {
-                    ListCarInfo listCarInfo= JSON.parseObject(response, ListCarInfo.class);
-                    listCarInfo.getList().get(0).getPlateNumber();
+
+//                    ListCarInfo listCarInfo= JSON.parseObject(response, ListCarInfo.class);
+//                    listCarInfo.getList().get(0).getPlateNumber();
                     }
                 });
 

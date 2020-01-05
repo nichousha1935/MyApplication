@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
@@ -48,7 +49,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
 
     public void setActivityContentView(@LayoutRes int layoutResID) {
-        linearLayout.addView(LayoutInflater.from(this).inflate(layoutResID,null));
+        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+        linearLayout.addView(LayoutInflater.from(this).inflate(layoutResID,null),params);
         initView();
         initBind();
         initData();

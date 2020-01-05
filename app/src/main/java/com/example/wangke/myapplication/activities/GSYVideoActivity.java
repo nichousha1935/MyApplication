@@ -1,6 +1,5 @@
 package com.example.wangke.myapplication.activities;
 
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,7 +30,7 @@ public class GSYVideoActivity extends BaseActivity {
     @Override
     public void initView() {
         detailPlayer = findViewById(R.id.video_player);
-        String source1 = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
+        String source1 = "rtsp://211.103.33.70:554/openUrl/n644fpm";
 
         //增加封面
         ImageView imageView = new ImageView(this);

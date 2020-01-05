@@ -11,6 +11,7 @@
     <!--<meta-data-->
     <!--android:name="com.taobao.android.hotfix.RSASECRET"-->
     <!--android:value="RSA密钥" />-->
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:name="app.MyApplication"
         android:allowBackup="true"
@@ -22,6 +23,10 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="ac2006617b3fa0a10294b6f1a5434327"/>
+        <!--<service android:name="com.amap.api.location.APSService"/>-->
         <activity android:name="com.example.wangke.myapplication.activities.MainActivity" />
         <activity android:name="com.example.wangke.myapplication.activities.SplashScreenActivity">
             <intent-filter>
@@ -40,12 +45,54 @@
             android:name=".activities.VersionUpdateActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".haikang.HaiKangActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.wangke.myapplication.haikang.AudioVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.DragActivity" />
+        <activity
+            android:name=".activities.WebViewActivity"
+            android:hardwareAccelerated="true" />
+        <activity
             android:name=".activities.GSYVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.MultiscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.ListMultiVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.MapActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.GaoDeSearchActivity"
+            android:theme="@style/DialogActivityTheme"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.DataListActivity"
+            android:theme="@style/DialogActivityTheme"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 
         <service android:name=".service.PlayService" />
         <service android:name=".service.NewPlayService" />
+
+        <receiver android:name=".service.NotificationClickReceiver" />
+        <!-- 配置glide加载https所需要的GlideModule -->
+        <meta-data
+            android:name="com.example.wangke.myapplication.glide.GlideModelConfig"
+            android:value="GlideModule" />
 
         <!-- 解决apk安装失败的问题 -->
         <provider
@@ -61,17 +108,34 @@
 
     <!-- 往SDCard写入数据权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--  从SDCard读取数据权限 -->
+    <!--  悬浮窗权限 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!--  请求网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--  相机权限权限 -->
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <!--  相机权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!--  网络访问权限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--  wifi使用权限 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--  从SDCard读取数据权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--  访问日历权限 -->
     <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <!--  未知应用安装权限 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
-
+    //地图包、搜索包需要的基础权限
+    <!--允许程序打开网络套接字-->
+    <!--<uses-permission android:name="android.permission.INTERNET" />-->
+    <!--&lt;!&ndash;允许程序设置内置sd卡的写权限&ndash;&gt;-->
+    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <!--&lt;!&ndash;允许程序获取网络状态&ndash;&gt;-->
+    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
+    <!--&lt;!&ndash;允许程序访问WiFi网络信息&ndash;&gt;-->
+    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />-->
+    <!--允许程序读写手机状态和身份-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 </manifest>
