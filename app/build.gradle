@@ -19,7 +19,7 @@ android {
         abi {
             enable true
             reset()
-            include 'x86', 'armeabi-v7a','x86_64'
+            include 'x86', 'armeabi-v7a', 'x86_64'
             universalApk true
         }
     }
@@ -98,14 +98,13 @@ dependencies {
     //    implementation 'com.shuyu:gsyVideoPlayer-x64:7.0.1'
     //    implementation 'com.shuyu:gsyVideoPlayer-x86:7.0.1'
 
-
     //3D地图so及jar
-    implementation 'com.amap.api:3dmap:latest.integration'
+    // implementation 'com.amap.api:3dmap:latest.integration'
     //定位功能
     implementation 'com.amap.api:location:latest.integration'
     //搜索功能
     implementation 'com.amap.api:search:latest.integration'
     //导航功能
-    //implementation 'com.amap.api:navi-3dmap:latest.integration'//5.0后导航SDK包含3D地图
+    implementation 'com.amap.api:navi-3dmap:latest.integration'//5.0后导航SDK包含3D地图
 
 }

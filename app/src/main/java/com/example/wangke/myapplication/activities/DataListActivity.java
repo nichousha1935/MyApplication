@@ -16,11 +16,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.example.wangke.myapplication.R;
-import com.example.wangke.myapplication.fragment.EntertainmentFragment;
-import com.example.wangke.myapplication.fragment.MovieFragment;
-import com.example.wangke.myapplication.fragment.NewFragment;
-import com.example.wangke.myapplication.fragment.SocietyFragment;
-import com.example.wangke.myapplication.fragment.SportFragment;
+import com.example.wangke.myapplication.fragment.DataListFragment;
 
 public class DataListActivity extends AppCompatActivity implements View.OnClickListener {
     private TabLayout tabLayout;
@@ -83,15 +79,15 @@ public class DataListActivity extends AppCompatActivity implements View.OnClickL
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    return new NewFragment();
+                    return new DataListFragment();
                 case 1:
-                    return new SportFragment();
+                    return new DataListFragment();
                 case 2:
-                    return new SocietyFragment();
+                    return new DataListFragment();
                 case 3:
-                    return new EntertainmentFragment();
+                    return new DataListFragment();
                 case 4:
-                    return new MovieFragment();
+                    return new DataListFragment();
             }
             return null;
         }
@@ -106,5 +102,11 @@ public class DataListActivity extends AppCompatActivity implements View.OnClickL
         public CharSequence getPageTitle(int position) {
             return title[position];
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.slide_down_exit);
     }
 }

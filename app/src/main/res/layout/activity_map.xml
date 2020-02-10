@@ -9,12 +9,12 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/et_search"
@@ -49,4 +49,42 @@
         android:layout_centerVertical="true"
         android:layout_margin="10dp"
         android:src="@mipmap/list" />
+
+    <ImageView
+        android:id="@+id/img_homing"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_below="@id/img_list_search"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:src="@mipmap/homing" />
+
+    <ImageView
+        android:id="@+id/img_shrink"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/img_homing"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:src="@mipmap/shrink"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/img_expand"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/img_shrink"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:src="@mipmap/expand"
+        android:visibility="gone" />
+    <ImageView
+        android:id="@+id/img_reveal"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@id/img_list_search"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:src="@mipmap/reveal"
+        />
 </RelativeLayout>

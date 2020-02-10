@@ -26,7 +26,7 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="ac2006617b3fa0a10294b6f1a5434327"/>
-        <!--<service android:name="com.amap.api.location.APSService"/>-->
+        <service android:name="com.amap.api.location.APSService"></service>
         <activity android:name="com.example.wangke.myapplication.activities.MainActivity" />
         <activity android:name="com.example.wangke.myapplication.activities.SplashScreenActivity">
             <intent-filter>
@@ -75,13 +75,24 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.GaoDeSearchActivity"
-            android:theme="@style/DialogActivityTheme"
+            android:theme="@style/DialogActivityThemeDown"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.DataListActivity"
-            android:theme="@style/DialogActivityTheme"
+            android:theme="@style/DialogActivityThemeDown"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.AddInfoSelectActivity"
+            android:theme="@style/DialogActivityThemeRight"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.RevealSelectActivity"
+            android:theme="@style/DialogActivityThemeRight"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 
@@ -138,4 +149,24 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    //定位SDK需要的权限
+    <!--&lt;!&ndash;用于进行网络定位&ndash;&gt;-->
+    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>-->
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <!--&lt;!&ndash;用于获取运营商信息，用于支持提供运营商信息相关的接口&ndash;&gt;-->
+    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>-->
+    <!--&lt;!&ndash;用于访问wifi网络信息，wifi信息会用于进行网络定位&ndash;&gt;-->
+    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>-->
+    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!--用于访问网络，网络定位需要上网-->
+    <!--<uses-permission android:name="android.permission.INTERNET"></uses-permission>-->
+    <!--用于读取手机当前的状态-->
+    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>-->
+    <!--用于写入缓存数据到扩展存储卡-->
+    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>-->
+    <!--用于申请调用A-GPS模块-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
 </manifest>

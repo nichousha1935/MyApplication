@@ -38,6 +38,7 @@ public class GaoDeSearchActivity extends BaseActivity implements Inputtips.Input
     private CommonAdapter<Tip> commonAdapter;
     private ImageView img_back;
     private LatLng latLng;
+    private String cityName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class GaoDeSearchActivity extends BaseActivity implements Inputtips.Input
         lp.gravity = Gravity.BOTTOM;
         dialogWindow.setAttributes(lp);
         latLng = getIntent().getParcelableExtra("LatLng");
+        cityName=getIntent().getStringExtra("cityName");
         img_back = findViewById(R.id.img_back);
         img_back.setOnClickListener(this::widgetClick);
         lt_search = findViewById(R.id.lt_search);
@@ -71,7 +73,7 @@ public class GaoDeSearchActivity extends BaseActivity implements Inputtips.Input
             @Override
             public void afterTextChanged(Editable s) {
                 //第二个参数传入null或者“”代表在全国进行检索，否则按照传入的city进行检索
-                InputtipsQuery input_query = new InputtipsQuery(s.toString(), "泰州");
+                InputtipsQuery input_query = new InputtipsQuery(s.toString(), cityName);
                 input_query.setCityLimit(true);//限制在当前城市
                 Inputtips inputTips = new Inputtips(GaoDeSearchActivity.this, input_query);
                 inputTips.setInputtipsListener(GaoDeSearchActivity.this::onGetInputtips);
@@ -143,4 +145,9 @@ public class GaoDeSearchActivity extends BaseActivity implements Inputtips.Input
         }
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0,R.anim.slide_down_exit);
+    }
 }

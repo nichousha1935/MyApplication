@@ -8,16 +8,39 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="DialogActivityTheme" parent="Theme.AppCompat.Dialog">
+    <style name="DialogActivityThemeDown" parent="Theme.AppCompat.Dialog">
         <item name="android:windowTranslucentStatus">true</item><!--透明状态栏并占用状态栏位置 -->
         <item name="android:windowIsTranslucent">true</item><!-- 半透明 -->
-        <item name="android:windowBackground">@drawable/drawable_dialog_activity</item>
+        <item name="android:windowBackground">@drawable/drawable_dialog_down_activity</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowCloseOnTouchOutside">false</item>
         <item name="android:backgroundDimAmount">0.5</item><!-- 背景模糊的透明度 数值越小越透明-->
         <item name="android:windowIsFloating">true</item><!-- 浮现在Activity之上 -->
         <item name="windowNoTitle">true</item><!-- 无标题 -->
-        <item name="android:windowAnimationStyle">@null</item><!-- 进入和退出动画 -->
+        <item name="android:windowAnimationStyle">@style/windowAnimationDown</item><!-- 进入和退出动画 -->
+    </style>
+
+    <style name="DialogActivityThemeRight" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowTranslucentStatus">true</item><!--透明状态栏并占用状态栏位置 -->
+        <item name="android:windowIsTranslucent">true</item><!-- 半透明 -->
+        <item name="android:windowBackground">@drawable/drawable_dialog_right_activity</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:backgroundDimAmount">0.5</item><!-- 背景模糊的透明度 数值越小越透明-->
+        <item name="android:windowIsFloating">true</item><!-- 浮现在Activity之上 -->
+        <item name="windowNoTitle">true</item><!-- 无标题 -->
+        <item name="android:windowAnimationStyle">@style/windowAnimationRight</item><!-- 进入和退出动画 -->
+    </style>
+
+    <style name="windowAnimationRight" parent="@android:style/Animation.Translucent">
+        <item name="android:windowEnterAnimation">@anim/slide_right_enter</item>
+        <item name="android:windowExitAnimation">@anim/slide_right_exit</item>
+    </style>
+
+    <style name="windowAnimationDown" parent="@android:style/Animation.Translucent">
+        <item name="android:windowEnterAnimation">@anim/slide_down_enter</item>
+        <item name="android:windowExitAnimation">@anim/slide_down_exit</item>
     </style>
 </resources>

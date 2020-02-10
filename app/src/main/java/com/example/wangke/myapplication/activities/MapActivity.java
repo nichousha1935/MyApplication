@@ -2,8 +2,10 @@ package com.example.wangke.myapplication.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Point;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,10 +16,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amap.api.mapcore.util.le;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
@@ -57,8 +63,56 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
     private Marker locationMarker;
     private String current_cityCode;
     private String current_cityName;
-    private ImageView img_address_search, img_list_search;
+    private AMapLocation currentaMapLocation;
+    private int currentZoom = 19;
+    private UiSettings mUiSettings;//定义一个UiSettings对象
+    private ImageView img_address_search, img_list_search, img_homing, img_shrink, img_expand, img_reveal;
     public LatLng currentLatLng;
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //声明定位回调监听器
+    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation aMapLocation) {
+            if (aMapLocation != null) {
+                if (aMapLocation.getErrorCode() == 0) {
+                    //可在其中解析amapLocation获取相应内容。
+//                    aMapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
+//                    aMapLocation.getLatitude();//获取纬度
+//                    aMapLocation.getLongitude();//获取经度
+//                    aMapLocation.getAccuracy();//获取精度信息
+//                    aMapLocation.getAddress();//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
+//                    aMapLocation.getCountry();//国家信息
+//                    aMapLocation.getProvince();//省信息
+//                    aMapLocation.getCity();//城市信息
+//                    aMapLocation.getDistrict();//城区信息
+//                    aMapLocation.getStreet();//街道信息
+//                    aMapLocation.getStreetNum();//街道门牌号信息
+//                    aMapLocation.getCityCode();//城市编码
+//                    aMapLocation.getAdCode();//地区编码
+//                    aMapLocation.getAoiName();//获取当前定位点的AOI信息
+//                    aMapLocation.getBuildingId();//获取当前室内定位的建筑物Id
+//                    aMapLocation.getFloor();//获取当前室内定位的楼层
+//                    aMapLocation.getGpsAccuracyStatus();//获取GPS的当前状态
+                    current_cityCode = aMapLocation.getCityCode();
+                    current_cityName = aMapLocation.getCity();
+                    currentLatLng = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+                    currentaMapLocation = aMapLocation;
+                    if (!isCreateMarker) {
+                        showGatherMarker(aMapLocation);
+                        isCreateMarker = true;
+                    }
+
+                } else {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+
+                }
+            }
+        }
+    };
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
+
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -71,8 +125,9 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
         if (aMap == null) {
             aMap = mapView.getMap();
         }
-
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(19));
+        mUiSettings = aMap.getUiSettings();//实例化UiSettings类对象
+        mUiSettings.setZoomControlsEnabled(false);
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(currentZoom));
         aMap.showIndoorMap(true);  //true：显示室内地图；false：不显示；
         aMap.setOnMyLocationChangeListener(this::onMyLocationChange);
         aMap.setOnMarkerClickListener(this::onMarkerClick);
@@ -91,7 +146,10 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
         //  aMap.getUiSettings().setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示，非必需设置。
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
+
+        allocation();
     }
+
 
     @Override
     public void initView() {
@@ -99,6 +157,11 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
         tv_search = findViewById(R.id.tv_search);
         img_address_search = findViewById(R.id.img_address_search);
         img_list_search = findViewById(R.id.img_list_search);
+        img_homing = findViewById(R.id.img_homing);
+        img_shrink = findViewById(R.id.img_shrink);
+        img_expand = findViewById(R.id.img_expand);
+        img_reveal = findViewById(R.id.img_reveal);
+
 
 //        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_SHOW);//只定位一次。
 //        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE) ;//定位一次，且将视角移动到地图中心点。
@@ -116,6 +179,10 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
         tv_search.setOnClickListener(this::widgetClick);
         img_address_search.setOnClickListener(this::widgetClick);
         img_list_search.setOnClickListener(this::widgetClick);
+        img_homing.setOnClickListener(this::widgetClick);
+        img_shrink.setOnClickListener(this::widgetClick);
+        img_expand.setOnClickListener(this::widgetClick);
+        img_reveal.setOnClickListener(this::widgetClick);
     }
 
     @Override
@@ -145,10 +212,33 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
                 poiSearch(et_search.getText().toString(), "", current_cityCode);
                 break;
             case R.id.img_address_search:
-                startActivityForResult(new Intent(MapActivity.this, GaoDeSearchActivity.class).putExtra("LatLng", currentLatLng), 1000);
+                startActivityForResult(new Intent(MapActivity.this, GaoDeSearchActivity.class).putExtra("LatLng", currentLatLng).putExtra("cityName",current_cityName), 1000);
                 break;
             case R.id.img_list_search:
                 startActivity(new Intent(MapActivity.this, DataListActivity.class));
+                break;
+            case R.id.img_homing:
+                homing(currentLatLng);
+                break;
+            case R.id.img_shrink:
+                if (currentZoom > 3) {
+                    aMap.moveCamera(CameraUpdateFactory.zoomOut());//缩放地图到当前缩放级别的下一级
+                    currentZoom = currentZoom - 1;
+                } else {
+                    ToastUtil.showToast(MapActivity.this, "缩放已经达到最小级别");
+                }
+
+                break;
+            case R.id.img_expand:
+                if (currentZoom < 19) {
+                    aMap.moveCamera(CameraUpdateFactory.zoomIn());//缩放地图到当前缩放级别的上一级
+                    currentZoom = currentZoom + 1;
+                } else {
+                    ToastUtil.showToast(MapActivity.this, "缩放已经达到最大级别");
+                }
+                break;
+            case R.id.img_reveal:
+                startActivity(new Intent(MapActivity.this, RevealSelectActivity.class));
                 break;
             default:
                 break;
@@ -160,6 +250,7 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
         mapView.onDestroy();
+        mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
     }
 
     @Override
@@ -186,34 +277,37 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
     //当前地理位置回调
     @Override
     public void onMyLocationChange(Location location) {
-        current_cityCode = ((le) location).getCityCode();
-        current_cityName = ((le) location).getCity();
-        currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-        showMarker(location);
+//        current_cityCode = ((rq) location).getCityCode();
+//        current_cityName = ((rq) location).getCity();
+//        currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+//        showGatherMarker(location);
     }
 
     public void setMapType(int type) {
         aMap.setMapType(type);
     }
 
-    public void showMarker(Location location) {
+    //调整采集位置的绘制点
+    public void showGatherMarker(Location location) {
         View view = LayoutInflater.from(this).inflate(R.layout.view_map_marker, null);
-        if (!isCreateMarker) {
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            MarkerOptions markerOption = new MarkerOptions();
-            markerOption.position(latLng);
-            markerOption.title("银杏苑").snippet("好地方");
-            markerOption.visible(true);
-//            markerOption.anchor((float) 0.5,(float) 0.5);//点标记的锚点
-            markerOption.draggable(true);//设置Marker可拖动
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        MarkerOptions markerOption = new MarkerOptions();
+       // markerOption.position(latLng);
+        markerOption.title("定位点").snippet("采集位置调整");
+        markerOption.visible(true);
+//        markerOption.infoWindowEnable(true);
+            markerOption.anchor((float) 0.5,(float) 1);//点标记的锚点
+        markerOption.draggable(false);//设置Marker可拖动
 //            markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
 //                    .decodeResource(getResources(), R.mipmap.location)));
-            markerOption.icon(BitmapDescriptorFactory.fromView(view));
-            // 将Marker设置为贴地显示，可以双指下拉地图查看效果
-            markerOption.setFlat(true);//设置marker平贴地图效果
-            locationMarker = aMap.addMarker(markerOption);
-            isCreateMarker = true;
-        }
+        markerOption.icon(BitmapDescriptorFactory.fromView(view));
+        // 将Marker设置为贴地显示，可以双指下拉地图查看效果
+        markerOption.setFlat(true);//设置marker平贴地图效果
+        locationMarker = aMap.addMarker(markerOption);
+       // LatLng latLng1 = aMap.getCameraPosition().target;
+        Point screenPosition = aMap.getProjection().toScreenLocation(latLng);//地理位置坐标转屏幕坐标
+        locationMarker.setPositionByPixels(mapView.getWidth()/2,mapView.getHeight()/2);//地图移动绘制点固定
+       // locationMarker.setPositionByPixels(screenPosition.x,screenPosition.y);
     }
 
     //绘制点点击回调
@@ -228,11 +322,13 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
         return true;
     }
 
+    //地理坐标转地址
     @Override
     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
         if (i == 1000) {
             RegeocodeAddress regeocodeAddress = regeocodeResult.getRegeocodeAddress();
             ToastUtil.showToast(this, regeocodeAddress.getFormatAddress());
+            startActivity(new Intent(MapActivity.this, AddInfoSelectActivity.class));
         }
     }
 
@@ -254,6 +350,7 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
         }
     }
 
+    //地理位置搜索
     @Override
     public void onPoiItemSearched(PoiItem poiItem, int i) {
 
@@ -268,6 +365,7 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
         poiSearch.searchPOIAsyn();
     }
 
+    //绘制点移动
     public void moveMarker(LatLng startLatLng, LatLng endLatLng) {
         // 获取轨迹坐标点
         List<LatLng> points = new ArrayList<>();
@@ -294,7 +392,7 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
         // 设置滑动的轨迹左边点
         movingPointOverlay.setPoints(subList);
         // 设置滑动的总时间
-        movingPointOverlay.setTotalDuration(5);
+        movingPointOverlay.setTotalDuration(4);
         // 开始滑动
         movingPointOverlay.startSmoothMove();
     }
@@ -324,8 +422,82 @@ public class MapActivity extends BaseActivity implements AMap.OnMyLocationChange
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000 && resultCode == RESULT_OK) {
-            moveMarker(currentLatLng, data.getParcelableExtra("location"));
+//            moveMarker(currentLatLng, data.getParcelableExtra("location"));
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    aMap.moveCamera(CameraUpdateFactory.newLatLng(data.getParcelableExtra("location")));
+//                }
+//            }, 2000);
+            homing(data.getParcelableExtra("location"));
         }
 
+    }
+
+    //归位方法
+    public void homing(LatLng latLng) {
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, currentZoom));//设置地图中心点
+        locationMarker.remove();
+        showGatherMarker(currentaMapLocation);
+    }
+
+    public void allocation() {
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+        AMapLocationClientOption option = new AMapLocationClientOption();
+        /**
+         * 设置定位场景，目前支持三种场景（签到、出行、运动，默认无场景）
+         */
+        option.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
+        if (null != mLocationClient) {
+            mLocationClient.setLocationOption(option);
+            //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
+            mLocationClient.stopLocation();
+            mLocationClient.startLocation();
+            //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+            //设置定位模式为AMapLocationMode.Battery_Saving，低功耗模式。
+            //mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
+            //设置定位模式为AMapLocationMode.Device_Sensors，仅设备模式。
+            //mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Device_Sensors);
+
+            //获取一次定位结果：
+            //该方法默认为false。
+            mLocationOption.setOnceLocation(false);
+
+            //获取最近3s内精度最高的一次定位结果：
+            //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。
+            // 如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
+            mLocationOption.setOnceLocationLatest(false);
+
+            //SDK默认采用连续定位模式，时间间隔2000ms。如果您需要自定义调用间隔：
+            //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
+            mLocationOption.setInterval(2000);
+
+            //设置是否返回地址信息（默认返回地址信息）
+            mLocationOption.setNeedAddress(true);
+
+            //设置是否允许模拟位置,默认为true，允许模拟位置
+            mLocationOption.setMockEnable(true);
+
+            //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
+            mLocationOption.setHttpTimeOut(20000);
+
+            //缓存机制默认开启，可以通过以下接口进行关闭。
+            //当开启定位缓存功能，在高精度模式和低功耗模式下进行的网络定位结果均会生成本地缓存，
+            // 不区分单次定位还是连续定位。GPS定位结果不会被缓存
+            //关闭缓存机制
+            mLocationOption.setLocationCacheEnable(false);
+
+            //给定位客户端对象设置定位参数
+            mLocationClient.setLocationOption(mLocationOption);
+            //启动定位
+            mLocationClient.startLocation();
+
+        }
     }
 }
