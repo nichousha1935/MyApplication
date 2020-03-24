@@ -26,6 +26,9 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="ac2006617b3fa0a10294b6f1a5434327"/>
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.0" />
         <service android:name="com.amap.api.location.APSService"></service>
         <activity android:name="com.example.wangke.myapplication.activities.MainActivity" />
         <activity android:name="com.example.wangke.myapplication.activities.SplashScreenActivity">

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.wangke.myapplication.R;
 import com.example.wangke.myapplication.utils.ToastUtil;
 import com.example.wangke.myapplication.views.ScreenPopupWindows;
+import com.example.wangke.myapplication.views.SearchPopupWindows;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class DataListFragment extends Fragment implements View.OnClickListener {
     private TextView tv_one, tv_two, tv_three, tv_four;
     private ImageView img_one, img_two, img_three, img_four;
     private ScreenPopupWindows screenPopupWindows;
+    private SearchPopupWindows searchPopupWindows;
     private List<String> list=new ArrayList<>();
     private int selectDiatance;
 
@@ -83,7 +85,7 @@ public class DataListFragment extends Fragment implements View.OnClickListener {
                         tv_one.setText(list.get(position));
                     }
                 });
-                screenPopupWindows.showAsDropDown(lin_four);
+                screenPopupWindows.showAsDropDown(lin_one);
                 //控制popupwindows消失需要执行的逻辑
                 screenPopupWindows.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
@@ -94,6 +96,22 @@ public class DataListFragment extends Fragment implements View.OnClickListener {
                 });
                 break;
             case R.id.lin_two:
+                tv_two.setTextColor(Color.parseColor("#1296db"));
+                img_two.setBackgroundResource(R.mipmap.little_arrow_up);
+                searchPopupWindows=new SearchPopupWindows(getContext(), new SearchPopupWindows.ClickListener() {
+                    @Override
+                    public void click(String s) {
+                        searchPopupWindows.dismiss();
+                    }
+                });
+                searchPopupWindows.showAsDropDown(lin_two);
+                searchPopupWindows.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        tv_two.setTextColor(Color.parseColor("#000000"));
+                        img_two.setBackgroundResource(R.mipmap.little_arrow_down);
+                    }
+                });
                 break;
             case R.id.lin_three:
                 break;

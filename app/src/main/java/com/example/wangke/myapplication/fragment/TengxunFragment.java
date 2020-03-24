@@ -19,6 +19,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ import com.example.wangke.myapplication.utils.FileProvider7;
 import com.example.wangke.myapplication.utils.FileUtil;
 import com.example.wangke.myapplication.utils.ToastUtil;
 import com.example.wangke.myapplication.utils.Tool;
+import com.example.wangke.myapplication.views.DMDialog;
 
 import java.io.File;
 import java.security.MessageDigest;
@@ -61,7 +63,7 @@ public class TengxunFragment extends Fragment implements View.OnClickListener {
     private TextView textView;
     private TextView updateTextView, pictureTextView, videoPlayTextView, weakReferenceTextView,
             photographTextView, haikangTextVIew, dragTextView, h5TextView, multiscreenTextView,
-            apptoappTextview,mapTextView;
+            apptoappTextview, mapTextView, dialogTextView;
     public static final int RC_CHOOSE_PHOTO = 2;
     public static final int RC_UPDATE_APP = 3;
     private ImageView showImageView;
@@ -96,7 +98,8 @@ public class TengxunFragment extends Fragment implements View.OnClickListener {
         h5TextView = view.findViewById(R.id.tv_h5);
         multiscreenTextView = view.findViewById(R.id.tv_multiscreen);
         apptoappTextview = view.findViewById(R.id.tv_apptoapp);
-        mapTextView=view.findViewById(R.id.tv_map);
+        mapTextView = view.findViewById(R.id.tv_map);
+        dialogTextView = view.findViewById(R.id.tv_dialog);
 
         updateTextView.setOnClickListener(this);
         pictureTextView.setOnClickListener(this);
@@ -109,6 +112,7 @@ public class TengxunFragment extends Fragment implements View.OnClickListener {
         multiscreenTextView.setOnClickListener(this);
         apptoappTextview.setOnClickListener(this);
         mapTextView.setOnClickListener(this);
+        dialogTextView.setOnClickListener(this::onClick);
 
         textView = view.findViewById(R.id.tv_content);
         textView.setText("腾讯");
@@ -246,6 +250,9 @@ public class TengxunFragment extends Fragment implements View.OnClickListener {
             case R.id.tv_map:
                 startActivity(new Intent(getContext(), MapActivity.class));
                 break;
+            case R.id.tv_dialog:
+                showDialog();
+                break;
             default:
                 break;
         }
@@ -377,5 +384,16 @@ public class TengxunFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void showDialog() {
+        DMDialog.builder(getActivity(), R.layout.dialog_main)
+                .onDialogInitListener((helper, dialog) ->
+                {
+                    helper.setText(R.id.tv_hello, "哈哈");
+                    helper.setText(R.id.btn_show_dialog, "代码中设置的文字");
+                })
+                .setGravity(Gravity.BOTTOM)
+                .show();
     }
 }
