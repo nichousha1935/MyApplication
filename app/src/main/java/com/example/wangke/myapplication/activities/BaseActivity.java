@@ -25,7 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      **/
     private boolean isSetStatusBar = true;
     /**
-     * 是否允许旋转屏幕
+     * 屏幕横竖屏false竖屏 true横屏
      **/
     private boolean isAllowScreenRotate = false;
     private LinearLayout linearLayout;
@@ -111,6 +111,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(Color.WHITE);
         }
+//        首先，要修改状态栏android版本至少要在4.4以上，并且在4.4是不能让状态栏透明的，只能达到一种半透明的阴影背景，
+//        而在5.x的版本中，是可以修改背景颜色但无法修改字体颜色的，只有在6.0以上是可以随意修改的。
+//        但是在魅族和小米第三方ROM在4.4版本以上的手机都提供了修改的接口。
     }
 
     /**

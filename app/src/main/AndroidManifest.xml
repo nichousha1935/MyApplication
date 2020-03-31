@@ -25,11 +25,13 @@
         tools:replace="android:appComponentFactory">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="ac2006617b3fa0a10294b6f1a5434327"/>
+            android:value="ac2006617b3fa0a10294b6f1a5434327" />
         <meta-data
             android:name="android.max_aspect"
             android:value="2.0" />
+
         <service android:name="com.amap.api.location.APSService"></service>
+
         <activity android:name="com.example.wangke.myapplication.activities.MainActivity" />
         <activity android:name="com.example.wangke.myapplication.activities.SplashScreenActivity">
             <intent-filter>
@@ -61,7 +63,14 @@
             android:name=".activities.GSYVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".activities.SingleActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MultiActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.MultiscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -78,26 +87,26 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.GaoDeSearchActivity"
-            android:theme="@style/DialogActivityThemeDown"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/DialogActivityThemeDown" />
 
         <activity
             android:name=".activities.DataListActivity"
-            android:theme="@style/DialogActivityThemeDown"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/DialogActivityThemeDown" />
 
         <activity
             android:name=".activities.AddInfoSelectActivity"
-            android:theme="@style/DialogActivityThemeRight"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/DialogActivityThemeRight" />
         <activity
             android:name=".activities.RevealSelectActivity"
-            android:theme="@style/DialogActivityThemeRight"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/DialogActivityThemeRight" />
 
         <service android:name=".service.PlayService" />
         <service android:name=".service.NewPlayService" />

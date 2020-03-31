@@ -33,6 +33,8 @@ import com.example.wangke.myapplication.activities.DragActivity;
 import com.example.wangke.myapplication.activities.GSYVideoActivity;
 import com.example.wangke.myapplication.activities.ListMultiVideoActivity;
 import com.example.wangke.myapplication.activities.MapActivity;
+import com.example.wangke.myapplication.activities.MultiActivity;
+import com.example.wangke.myapplication.activities.SingleActivity;
 import com.example.wangke.myapplication.activities.VersionUpdateActivity;
 import com.example.wangke.myapplication.activities.WeakActivity;
 import com.example.wangke.myapplication.activities.WebViewActivity;
@@ -61,9 +63,20 @@ public class TengxunFragment extends Fragment implements View.OnClickListener {
     //菜单是否展开的flag,false表示没展开
     private boolean mFlag = false;
     private TextView textView;
-    private TextView updateTextView, pictureTextView, videoPlayTextView, weakReferenceTextView,
-            photographTextView, haikangTextVIew, dragTextView, h5TextView, multiscreenTextView,
-            apptoappTextview, mapTextView, dialogTextView;
+    private TextView updateTextView;//强制更新
+    private TextView pictureTextView;//图片视频选择
+    private TextView photographTextView;//拍照录像
+    private TextView videoPlayTextView;//视频播放
+    private TextView weakReferenceTextView;//弱引用
+    private TextView haikangTextVIew;//海康
+    private TextView dragTextView;//拖拽控件
+    private TextView h5TextView;//webview
+    private TextView multiscreenTextView;//多屏播放
+    private TextView apptoappTextview;//app跳转
+    private TextView mapTextView;//高德地图
+    private TextView dialogTextView;//dialog
+    private TextView singleTextview;//单选页面
+    private TextView multiTextView;//多选页面
     public static final int RC_CHOOSE_PHOTO = 2;
     public static final int RC_UPDATE_APP = 3;
     private ImageView showImageView;
@@ -100,6 +113,8 @@ public class TengxunFragment extends Fragment implements View.OnClickListener {
         apptoappTextview = view.findViewById(R.id.tv_apptoapp);
         mapTextView = view.findViewById(R.id.tv_map);
         dialogTextView = view.findViewById(R.id.tv_dialog);
+        singleTextview = view.findViewById(R.id.tv_single);
+        multiTextView = view.findViewById(R.id.tv_multi);
 
         updateTextView.setOnClickListener(this);
         pictureTextView.setOnClickListener(this);
@@ -113,6 +128,8 @@ public class TengxunFragment extends Fragment implements View.OnClickListener {
         apptoappTextview.setOnClickListener(this);
         mapTextView.setOnClickListener(this);
         dialogTextView.setOnClickListener(this::onClick);
+        singleTextview.setOnClickListener(this::onClick);
+        multiTextView.setOnClickListener(this::onClick);
 
         textView = view.findViewById(R.id.tv_content);
         textView.setText("腾讯");
@@ -252,6 +269,12 @@ public class TengxunFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.tv_dialog:
                 showDialog();
+                break;
+            case R.id.tv_single:
+                startActivity(new Intent(getContext(), SingleActivity.class));
+                break;
+            case R.id.tv_multi:
+                startActivity(new Intent(getContext(), MultiActivity.class));
                 break;
             default:
                 break;
